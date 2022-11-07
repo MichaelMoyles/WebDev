@@ -22,7 +22,21 @@
             xmlhttp.send();
             
             function totalSenators(obj) {
-                console.log('success')
+                var senators = obj.objects;
+    
+                // This code iterates through the senators arry and writes html code to put the senator's information in a table.
+                var senatorInfo = "<table border = 1 >";
+                senatorInfo += "<tr><th>Senator Name</th></tr>";    
+                for (var i=0; i <senators.length; i++) 
+                {    
+                    var senatorName = senators[i].person.name;               
+                    senatorInfo += "<tr><td>" + senatorName + "</td>";
+                }
+                 // Close the table element.
+                senatorInfo += "</table>"; 
+
+                // Add the new html code to the div element with id = 'id01'.
+                document.getElementById("id01").innerHTML = senatorInfo
             }
             
         </script>
