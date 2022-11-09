@@ -5,40 +5,73 @@
         <div id="id01"></div>
         
         <script>
+            
+            var parsedObj;
             var xmlhttp = new XMLHttpRequest();
             var url = "senators.json";
 
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-        
-                //Parse the JSON data to a JavaScript variable. 
-                var parsedObj = JSON.parse(xmlhttp.responseText);    
-                // This function is defined below and deals with the JSON data parsed from the file. 
-                totalSenators(parsedObj);
+                    parsedObj = JSON.parse(xmlhttp.responseText);
+                    run()
                 }
             };
-
+            
             xmlhttp.open("GET", url, true);
             xmlhttp.send();
+
+            function run(){
+                totalSenators(parsedObj);
+                DemvRep(parsedObj);
+            };
             
             function totalSenators(obj) {
                 var senators = obj.objects;
     
                 // This code iterates through the senators arry and writes html code to put the senator's information in a table.
-                var senatorInfo = "<table border = 1 >";
-                senatorInfo += "<tr><th>Senator Name</th></tr>";    
-                for (var i=0; i <senators.length; i++) 
-                {    
-                    var senatorName = senators[i].person.name;               
-                    senatorInfo += "<tr><td>" + senatorName + "</td>";
+                var senatorInfo = "<ul>";   
+                for (var i=0; i <senators.length; i++) {    
+                    if (senators[i].leadership_title != null && senators[i].party == "Democrat") {
+                        var senatorTitle = senators[i].leadership_title
+                        var senatorLastName = senators[i].person.firstname;
+                        var senatorFirstName = senators[i].person.lastname;
+                        var senatorParty = senators[i].party;
+                        senatorInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
+                    } 
                 }
-                 // Close the table element.
-                senatorInfo += "</table>"; 
-
-                // Add the new html code to the div element with id = 'id01'.
-                document.getElementById("id01").innerHTML = senatorInfo
+                
+                for (var i=0; i <senators.length; i++) {
+                    if (senators[i].leadership_title != null && senators[i].party == "Republican") {
+                        var senatorTitle = senators[i].leadership_title
+                        var senatorLastName = senators[i].person.firstname;
+                        var senatorFirstName = senators[i].person.lastname;
+                        var senatorParty = senators[i].party;
+                        senatorInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
+                    }
+                }
+                
+                // Close the list element.
+                senatorInfo += "</ul>";
+                document.getElementById("id02").innerHTML = senatorInfo;
             }
             
+            function DemvRep(obj) {
+                var senators = obj.objects;
+                var DemvRep = "<table border = 1 >";
+                DemvRep += "<tr><th colspan=2>Number Dem vs Rep</th></tr>";
+                var c_Dem = 0;
+                var c_Rep = 0;
+                for (var i=0; i <senators.length; i++) {   
+                    if (senators[i].party == "Republican") {
+                        c_Rep += 1;
+                    } else if (senators[i].party == "Democrat") {
+                        c_Dem += 1;
+                    }
+                }
+                
+                DemvRep += "<tr><td>" + c_Dem + "</td><td>" + c_Rep + "</td></tr></table>";
+                document.getElementById("id01").innerHTML = DemvRep;
+            }
         </script>
     
     </body>
