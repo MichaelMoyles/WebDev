@@ -1,1 +1,15 @@
-font: ;
+h1, h2, h3, h4, h5, h6, p, body, ul, li, a, header, nav, footer, div, article, source, video, figure, html {
+    margin: 0px;
+    padding: 0px;
+}
+
+table, th, td {
+    border: black 1px solid;
+    border-collapse: collapse;
+    margin: 20px;
+    text-align: center;
+}
+
+ul {
+    margin: 20px;
+}
