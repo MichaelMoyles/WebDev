@@ -3,20 +3,46 @@
     <head>
         <meta charset="utf-8">
         <link rel = stylesheet type ="text/css" href="./assign1.css">
-        <title>US Senate</title>
+        <title>United States Senate</title>
     </head>
     
     <body>
-
-        <div id="id01"></div>
-        <div id="id02"></div>
+        <nav>
+            <p>United States Senate</p>
+        </nav>
+        
+        <div class="banner"></div>
+        
+        <div class="reps">
+            <div id="id01"></div>
+        </div>
+        
+        <div class="leaders">
+            <div class="dem">
+                <h3>Democrats</h3>
+                <div id="id02"></div>
+            </div>
+            
+            <div class="rep">
+                <h3>Republicans</h3>
+                <div id="id03"></div>
+            </div>
+        </div>
+        
+        <div class="senatorInfo">
+            <div id="id04"></div>
+            <div id="id05"></div>
+            <div id="id06"></div>
+        </div>
+        
         
         <script>
-            
+            // Initalising a global variable to hold the JSON data
             var parsedObj;
             var xmlhttp = new XMLHttpRequest();
             var url = "senators.json";
-
+            
+            // Parses the JSON data and invokes the function run()
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     parsedObj = JSON.parse(xmlhttp.responseText);
@@ -26,73 +52,100 @@
             
             xmlhttp.open("GET", url, true);
             xmlhttp.send();
-
+            
+            // Seperate out functions that utilise the JSON data for better readability
             function run(){
-                DemvRep(parsedObj);
-                totalSenators(parsedObj);
+                reps(parsedObj);
+                senatorInfo(parsedObj);
             };
             
-            function DemvRep(obj) {
+            /* Function that counts the instances of democrat, republican and independents and populates the list of democrats and republicans in leadership positions. All completed in one loop to reduce looping time */
+            function reps(obj) {
                 var senators = obj.objects;
-                var DemvRep = "<table>";
-                DemvRep += "<tr><th colspan=3>Number Dem, Rep & Ind</th></tr>";
-                var c_Dem = 0;
-                var c_Rep = 0;
-                var ind = 0
+                var repsTable = "<table class='repsTable'>";
+                var dem = 0;
+                var repub = 0;
+                var ind = 0;
+                var demInfo = "<ul>";
+                var repInfo = "<ul>";
                 for (var i=0; i <senators.length; i++) {   
-                    if (senators[i].party == "Republican") {
-                        c_Rep += 1;
-                    } else if (senators[i].party == "Democrat") {
-                        c_Dem += 1;
+                    if (senators[i].party == "Democrat") {
+                        dem += 1;
+                            if (senators[i].leadership_title != null) {
+                                var senatorTitle = senators[i].leadership_title
+                                var senatorLastName = senators[i].person.firstname;
+                                var senatorFirstName = senators[i].person.lastname;
+                                var senatorParty = senators[i].party;
+                                demInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
+                            }
+                    } else if (senators[i].party == "Republican") {
+                        repub += 1;
+                            if (senators[i].leadership_title != null) {
+                                var senatorTitle = senators[i].leadership_title
+                                var senatorLastName = senators[i].person.firstname;
+                                var senatorFirstName = senators[i].person.lastname;
+                                var senatorParty = senators[i].party;
+                                repInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
+                            }
                     } else {
-                        ind += 1
+                        ind += 1 //There are no independents in leadership positions
                     }
                 }
                 
-                DemvRep += "<tr><td>" + c_Dem + "</td><td>" + c_Rep + "</td><td>" + ind + "</td></tr></table>";
-                document.getElementById("id01").innerHTML = DemvRep;
+                repsTable += "<tr><th colspan=3>Number of Representatives</th></tr>";
+                repsTable += "<tr><td>Democrats</td><td>Republicans</td><td>Independents</td></tr>";
+                repsTable += "<tr><td>" + dem + "</td><td>" + repub + "</td><td>" + ind + "</td></tr></table>";
+                
+                demInfo += "</ul>";
+                repInfo += "</ul>";
+                
+                document.getElementById("id01").innerHTML = repsTable;
+                document.getElementById("id02").innerHTML = demInfo;
+                document.getElementById("id03").innerHTML = repInfo;
             }
             
-            function totalSenators(obj) {
+            function senatorInfo(obj) {
                 var senators = obj.objects;
-    
-                // This code iterates through the senators arry and writes html code to put the senator's information in a table.
-                
-                // Instead of looping through 3 times, create a list or a dictionary to store the variables during the first loop then iterate through the loop and display the values on the second loop
-                var senatorInfo = "<ul>";   
-                for (var i=0; i <senators.length; i++) {    
-                    if (senators[i].leadership_title != null && senators[i].party == "Democrat") {
-                        var senatorTitle = senators[i].leadership_title
-                        var senatorLastName = senators[i].person.firstname;
-                        var senatorFirstName = senators[i].person.lastname;
-                        var senatorParty = senators[i].party;
-                        senatorInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
-                    } 
-                }
-                
+                var senDemTable = "<table class='senDemTable'>";
+                senDemTable += "<tr><th colspan=6>Democrats</th></tr>";
+                var senRepTable = "<table class='senRepTable'>";
+                senRepTable += "<tr><th colspan=6>Republicans</th></tr>";
+                var senIndTable = "<table class='senIndTable'>";
+                senIndTable += "<tr><th colspan=6>Independents</th></tr>";
                 for (var i=0; i <senators.length; i++) {
-                    if (senators[i].leadership_title != null && senators[i].party == "Republican") {
-                        var senatorTitle = senators[i].leadership_title
+                    if (senators[i].party == "Democrat") {
                         var senatorLastName = senators[i].person.firstname;
                         var senatorFirstName = senators[i].person.lastname;
                         var senatorParty = senators[i].party;
-                        senatorInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
+                        var senatorState = senators[i].state;
+                        var senatorGender = senators[i].person.gender_label;
+                        var senatorRank = senators[i].senator_rank_label;
+                        senDemTable += "<tr><td>" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button'>Details</button></td></tr>";
+                    } else if (senators[i].party == "Republican") {
+                        var senatorLastName = senators[i].person.firstname;
+                        var senatorFirstName = senators[i].person.lastname;
+                        var senatorParty = senators[i].party;
+                        var senatorState = senators[i].state;
+                        var senatorGender = senators[i].person.gender_label;
+                        var senatorRank = senators[i].senator_rank_label;
+                        senRepTable += "<tr><td>" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button'>Details</button></td></tr>";
+                    } else {
+                        var senatorLastName = senators[i].person.firstname;
+                        var senatorFirstName = senators[i].person.lastname;
+                        var senatorParty = senators[i].party;
+                        var senatorState = senators[i].state;
+                        var senatorGender = senators[i].person.gender_label;
+                        var senatorRank = senators[i].senator_rank_label;
+                        senIndTable += "<tr><td>" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button'>Details</button></td></tr>";
                     }
                 }
                 
-                for (var i=0; i <senators.length; i++) {
-                    if (senators[i].leadership_title != null && senators[i].party != "Republican" && senators[i].party != "Democrat") {
-                        var senatorTitle = senators[i].leadership_title
-                        var senatorLastName = senators[i].person.firstname;
-                        var senatorFirstName = senators[i].person.lastname;
-                        var senatorParty = senators[i].party;
-                        senatorInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
-                    }
-                }
-                
-                // Close the list element
-                senatorInfo += "</ul>";
-                document.getElementById("id02").innerHTML = senatorInfo;
+                senDemTable += "</table>";
+                senRepTable += "</table>";
+                senIndTable += "</table";
+                document.getElementById("id04").innerHTML = senDemTable;
+                document.getElementById("id05").innerHTML = senRepTable;
+                document.getElementById("id06").innerHTML = senIndTable;
             }
             
         </script>
