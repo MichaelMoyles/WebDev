@@ -32,9 +32,10 @@
         <div class="senatorInfo">
             <div id="id04"></div>
             <div id="id05"></div>
-            <div id="id06"></div>
+            <!--<div id="id06"></div> Uncomment this to see the difference -->
         </div>
         
+        <div id="id06"></div>
         
         <script>
             // Initalising a global variable to hold the JSON data
@@ -104,14 +105,18 @@
                 document.getElementById("id03").innerHTML = repInfo;
             }
             
+            /* Function that creates the 3 senator info tables through one for loop to minimise looping time. All senators are Democrat, Republican or Other (Independent) */
             function senatorInfo(obj) {
                 var senators = obj.objects;
                 var senDemTable = "<table class='senDemTable'>";
                 senDemTable += "<tr><th colspan=6>Democrats</th></tr>";
+                senDemTable += "<tr><td>Name</td><td>Party</td><td>State</td><td>Gender</td><td>Rank</td></tr>";
                 var senRepTable = "<table class='senRepTable'>";
                 senRepTable += "<tr><th colspan=6>Republicans</th></tr>";
+                senRepTable += "<tr><td>Name</td><td>Party</td><td>State</td><td>Gender</td><td>Rank</td></tr>";
                 var senIndTable = "<table class='senIndTable'>";
                 senIndTable += "<tr><th colspan=6>Independents</th></tr>";
+                senIndTable += "<tr><td>Name</td><td>Party</td><td>State</td><td>Gender</td><td>Rank</td></tr>";
                 for (var i=0; i <senators.length; i++) {
                     if (senators[i].party == "Democrat") {
                         var senatorLastName = senators[i].person.firstname;
