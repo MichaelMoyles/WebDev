@@ -28,6 +28,7 @@
                 <div id="id03"></div>
             </div>
         </div>
+        
         <div id = "holding div"> <!-- Temprary div to hold the tables, this is the div that whose dislay will be turned to none when details is clicked, not needed if we go with the 3 in a row tables over the other option outlined below-->
             <div class="senatorInfo">
                 <div id="id04"></div>
@@ -36,6 +37,10 @@
             </div>
 
             <div id="id06"></div>
+        </div>
+        
+        <div class="senatorInfo">
+            <div id ="id07"></div>
         </div>
         
         <script>
@@ -57,13 +62,13 @@
             
             // Seperate out functions that utilise the JSON data for better readability
             function run(){
-                reps(parsedObj);
-                senatorInfo(parsedObj);
+                reps();
+                senatorInfo();
             };
             
             /* Function that counts the instances of democrat, republican and independents and populates the list of democrats and republicans in leadership positions. All completed in one loop to reduce looping time */
-            function reps(obj) {
-                var senators = obj.objects;
+            function reps() {
+                var senators = parsedObj.objects;
                 var repsTable = "<table class='repsTable'>";
                 var dem = 0;
                 var repub = 0;
@@ -107,8 +112,9 @@
             }
             
             /* Function that creates the 3 senator info tables through one for loop to minimise looping time. All senators are Democrat, Republican or Other (Independent) */
-            function senatorInfo(obj) {
-                var senators = obj.objects;
+            function senatorInfo() {
+                document.getElementById("id07").innerHTML = null;
+                var senators = parsedObj.objects;
                 var senDemTable = "<table class='senDemTable'>";
                 senDemTable += "<tr><th colspan=6>Democrats</th></tr>";
                 senDemTable += "<tr><td>Name</td><td>Party</td><td>State</td><td>Gender</td><td>Rank</td></tr>";
@@ -118,6 +124,8 @@
                 var senIndTable = "<table class='senIndTable'>";
                 senIndTable += "<tr><th colspan=6>Independents</th></tr>";
                 senIndTable += "<tr><td>Name</td><td>Party</td><td>State</td><td>Gender</td><td>Rank</td></tr>";
+                
+                /* In order to track which button was clicked I dynamically add an class name to each table data element, could expand on this with if statements and add a class name for the party, for the particular state and rank for the filtering dropdown */
                 for (var i=0; i <senators.length; i++) {
                     if (senators[i].party == "Democrat") {
                         var senatorLastName = senators[i].person.firstname;
@@ -126,7 +134,8 @@
                         var senatorState = senators[i].state;
                         var senatorGender = senators[i].person.gender_label;
                         var senatorRank = senators[i].senator_rank_label;
-                        senDemTable += "<tr><td>" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button'>Details</button></td></tr>";
+                        senDemTable += "<tr><td class="+i+">" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button' onclick='senDetailsBtnClicked("+i+")'>Details</button></td></tr>"; 
+                        
                     } else if (senators[i].party == "Republican") {
                         var senatorLastName = senators[i].person.firstname;
                         var senatorFirstName = senators[i].person.lastname;
@@ -134,7 +143,8 @@
                         var senatorState = senators[i].state;
                         var senatorGender = senators[i].person.gender_label;
                         var senatorRank = senators[i].senator_rank_label;
-                        senRepTable += "<tr><td>" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button'>Details</button></td></tr>";
+                        senRepTable += "<tr><td class="+i+">" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button' onclick='senDetailsBtnClicked("+i+")'>Details</button></td></tr>";
+                        
                     } else {
                         var senatorLastName = senators[i].person.firstname;
                         var senatorFirstName = senators[i].person.lastname;
@@ -142,7 +152,7 @@
                         var senatorState = senators[i].state;
                         var senatorGender = senators[i].person.gender_label;
                         var senatorRank = senators[i].senator_rank_label;
-                        senIndTable += "<tr><td>" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button'>Details</button></td></tr>";
+                        senIndTable += "<tr><td class="+i+">" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button' onclick='senDetailsBtnClicked("+i+")'>Details</button></td></tr>";
                     }
                 }
                 
@@ -152,6 +162,28 @@
                 document.getElementById("id04").innerHTML = senDemTable;
                 document.getElementById("id05").innerHTML = senRepTable;
                 document.getElementById("id06").innerHTML = senIndTable;
+            }
+            
+            /* Below is a proof of concept, when the details button is clicked the below runs, taking away the 3 tables and leaving the details tables. Can fix the jumping around later on by making the details table appear in the middle and adding an event to the close that auto brings you back to the class name of the previously clicked details button  */
+            
+            function senDetailsBtnClicked(i) {
+                document.getElementById("id04").innerHTML = null;
+                document.getElementById("id05").innerHTML = null;
+                document.getElementById("id06").innerHTML = null;
+                
+                var senators = parsedObj.objects;
+                var senDeatiledInfo = "<table>"
+                var senatorLastName = senators[i].person.firstname;
+                var senatorFirstName = senators[i].person.lastname;
+                var senatorParty = senators[i].party;
+                var senatorState = senators[i].state;
+                var senatorGender = senators[i].person.gender_label;
+                var senatorRank = senators[i].senator_rank_label;
+                
+                senDeatiledInfo += "<tr><td class="+i+">" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button' onclick='senatorInfo()'>Close</button></td></tr>";
+                senDeatiledInfo += "</table>"
+                
+                document.getElementById("id07").innerHTML = senDeatiledInfo;
             }
             
         </script>
