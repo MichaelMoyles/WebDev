@@ -1,0 +1,43 @@
+                
+            
+            
+    window.onload = populateSelect();
+
+    function populateSelect() {
+
+        // Create XMLHttpRequest object, with GET method.
+        var xhr = new XMLHttpRequest(), 
+            method = 'GET',
+            overrideMimeType = 'application/json',
+            url = 'senators.json';  // Add the file URL.
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+
+          // Parse JSON data.
+          let parsedObj = JSON.parse(xhr.responseText);
+            var senators = parsedObj.objects;
+            var senatorParty = senators[i].party;
+            var senatorState = senators[i].state;
+            var senatorRank = senators[i].senator_rank_label;
+            
+
+          let ele = document.getElementById('state');
+          for (let i = 0; i < senators.length; i++) {
+          
+            // Bind data to <select> element.
+            ele.innerHTML = ele.innerHTML +
+              '<option value="' + senators[i].state + '">' '</option>';
+          }
+        }
+      };
+      xhr.open(method, url, true);
+      xhr.send();
+    }
+
+    function show(ele) {
+        // Get the selected value from <select> element and show it.
+        let msg = document.getElementById('msg');
+        msg.innerHTML = 'Selected State: <b>' + ele.options[ele.selectedIndex].text + '</b> </br>';
+    }
+           
