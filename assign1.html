@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel = stylesheet type ="text/css" href="./assign1.css">
+        <link rel = stylesheet type ="text/css" href="senators.css">
         <title>United States Senate</title>
     </head>
     
@@ -28,11 +28,26 @@
                 <div id="id03"></div>
             </div>
         </div>
-        
+
         <div id = "holding div"> <!-- Temprary div to hold the tables, this is the div that whose dislay will be turned to none when details is clicked, not needed if we go with the 3 in a row tables over the other option outlined below-->
+            
+            
+            
+        <select id="state" onchange="show(this)">
+        <option value="">Choose State</option>
+            </select>
+            
+        <select id="party" onchange="show(this)">
+        <option value="">Choose Party</option>
+            </select>
+        <select id="rank" onchange="show(this)">
+        <option value="">Choose Rank</option>
+            </select>
+            
             <div class="senatorInfo">
                 <div id="id04"></div>
                 <div id="id05"></div>
+                
                 <!--<div id="id06"></div> Uncomment this to see the difference between 3 tables in a row vs 2 tables & 1 under it -->
             </div>
 
@@ -65,7 +80,8 @@
                 reps();
                 senatorInfo();
             };
-            
+
+           
             /* Function that counts the instances of democrat, republican and independents and populates the list of democrats and republicans in leadership positions. All completed in one loop to reduce looping time */
             function reps() {
                 var senators = parsedObj.objects;
@@ -179,13 +195,28 @@
                 var senatorState = senators[i].state;
                 var senatorGender = senators[i].person.gender_label;
                 var senatorRank = senators[i].senator_rank_label;
+                var senatorOffice = senators[i].extra.office;
+                var senatorDOB = senators[i].person.birthday;
+                var senatorStartDate = senators[i].startdate;
+                var senatorTwitter = senators[i].person.twitterid;
+                var senatorYoutube = senators[i].person.youtubeid;
+                var senatorWebsite = senators[i].website;
                 
-                senDeatiledInfo += "<tr><td class="+i+">" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button' onclick='senatorInfo()'>Close</button></td></tr>";
+                senDeatiledInfo += "<tr><th>Name</th><th> Party</th><th>State</th><th> Gender</th><th>Rank</th><th>Office</th><th>Date of Birth</th><th>Start Date</th><th>TwitterID</th><th>YoutubeID</th><th> Website</th><th></th></tr>";
+                
+                senDeatiledInfo += "<tr><td class="+i+">" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td>" + senatorOffice + "</td><td>" + senatorDOB + "</td><td>" + senatorStartDate +"</td><td>" + senatorTwitter + "</td><td>" + senatorYoutube + "</td><td>" + senatorWebsite + "</td><td><button type='button' onclick='senatorInfo()'>Close</button></td></tr>";
                 senDeatiledInfo += "</table>"
+                
+                
                 
                 document.getElementById("id07").innerHTML = senDeatiledInfo;
             }
             
+                 
+
+             
+            
+
         </script>
     </body>
 </html>
