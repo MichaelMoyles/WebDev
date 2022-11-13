@@ -32,14 +32,15 @@
         <div id = "holding div"> <!-- Temprary div to hold the tables, this is the div that whose dislay will be turned to none when details is clicked, not needed if we go with the 3 in a row tables over the other option outlined below-->
             
             
-            
         <select id="state" onchange="show(this)">
         <option value="">Choose State</option>
             </select>
             
+            
         <select id="party" onchange="show(this)">
         <option value="">Choose Party</option>
             </select>
+            
         <select id="rank" onchange="show(this)">
         <option value="">Choose Rank</option>
             </select>
@@ -96,8 +97,8 @@
                         dem += 1;
                             if (senators[i].leadership_title != null) {
                                 var senatorTitle = senators[i].leadership_title
-                                var senatorLastName = senators[i].person.firstname;
-                                var senatorFirstName = senators[i].person.lastname;
+                                var senatorLastName = senators[i].person.lastname;
+                                var senatorFirstName = senators[i].person.firstname;
                                 var senatorParty = senators[i].party;
                                 demInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
                             }
@@ -105,8 +106,8 @@
                         repub += 1;
                             if (senators[i].leadership_title != null) {
                                 var senatorTitle = senators[i].leadership_title
-                                var senatorLastName = senators[i].person.firstname;
-                                var senatorFirstName = senators[i].person.lastname;
+                                var senatorLastName = senators[i].person.lastname;
+                                var senatorFirstName = senators[i].person.firstname;
                                 var senatorParty = senators[i].party;
                                 repInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
                             }
@@ -144,8 +145,8 @@
                 /* In order to track which button was clicked I dynamically add an class name to each table data element, could expand on this with if statements and add a class name for the party, for the particular state and rank for the filtering dropdown */
                 for (var i=0; i <senators.length; i++) {
                     if (senators[i].party == "Democrat") {
-                        var senatorLastName = senators[i].person.firstname;
-                        var senatorFirstName = senators[i].person.lastname;
+                        var senatorLastName = senators[i].person.lastname;
+                        var senatorFirstName = senators[i].person.firstname;
                         var senatorParty = senators[i].party;
                         var senatorState = senators[i].state;
                         var senatorGender = senators[i].person.gender_label;
@@ -153,8 +154,8 @@
                         senDemTable += "<tr><td class="+i+">" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button' onclick='senDetailsBtnClicked("+i+")'>Details</button></td></tr>"; 
                         
                     } else if (senators[i].party == "Republican") {
-                        var senatorLastName = senators[i].person.firstname;
-                        var senatorFirstName = senators[i].person.lastname;
+                        var senatorLastName = senators[i].person.lastname;
+                        var senatorFirstName = senators[i].person.firstname;
                         var senatorParty = senators[i].party;
                         var senatorState = senators[i].state;
                         var senatorGender = senators[i].person.gender_label;
@@ -162,8 +163,8 @@
                         senRepTable += "<tr><td class="+i+">" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button' onclick='senDetailsBtnClicked("+i+")'>Details</button></td></tr>";
                         
                     } else {
-                        var senatorLastName = senators[i].person.firstname;
-                        var senatorFirstName = senators[i].person.lastname;
+                        var senatorLastName = senators[i].person.lastname;
+                        var senatorFirstName = senators[i].person.firstname;
                         var senatorParty = senators[i].party;
                         var senatorState = senators[i].state;
                         var senatorGender = senators[i].person.gender_label;
@@ -189,8 +190,8 @@
                 
                 var senators = parsedObj.objects;
                 var senDeatiledInfo = "<table>"
-                var senatorLastName = senators[i].person.firstname;
-                var senatorFirstName = senators[i].person.lastname;
+                var senatorLastName = senators[i].person.lastname;
+                var senatorFirstName = senators[i].person.firstname;
                 var senatorParty = senators[i].party;
                 var senatorState = senators[i].state;
                 var senatorGender = senators[i].person.gender_label;
@@ -212,7 +213,17 @@
                 document.getElementById("id07").innerHTML = senDeatiledInfo;
             }
             
-                 
+     
+let dropdown = document.getElementById('state');
+dropdown.length = 0;
+
+let defaultOption = document.createElement('option');
+defaultOption.text = 'Choose State';
+
+dropdown.add(defaultOption);
+dropdown.selectedIndex = 0;
+
+
 
              
             
