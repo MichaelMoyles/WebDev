@@ -1,38 +1,46 @@
-                
+  <select id="state" onchange="show(this)">
+        <option value="">Choose State</option>
+            </select>
             
             
-    window.onload = populateSelect();
-
-    function populateSelect() {
-
-        // Create XMLHttpRequest object, with GET method.
-        var xhr = new XMLHttpRequest(), 
-            method = 'GET',
-            overrideMimeType = 'application/json',
-            url = 'senators.json';  // Add the file URL.
-
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-
-          // Parse JSON data.
-          let parsedObj = JSON.parse(xhr.responseText);
-            var senators = parsedObj.objects;
-            var senatorParty = senators[i].party;
-            var senatorState = senators[i].state;
-            var senatorRank = senators[i].senator_rank_label;
+        <select id="party" onchange="show(this)">
+        <option value="">Choose Party</option>
+            </select>
             
+        <select id="rank" onchange="show(this)">
+        <option value="">Choose Rank</option>
+            </select>
+            
+            
+            
+            
+            
+            
+            
+ let dropdown = document.getElementById('state');
+dropdown.length = 0;
 
-          let ele = document.getElementById('state');
-          for (let i = 0; i < senators.length; i++) {
-          
-            // Bind data to <select> element.
-            ele.innerHTML = ele.innerHTML +
-              '<option value="' + senators[i].state + '">' '</option>';
-          }
-        }
-      };
-      xhr.open(method, url, true);
-      xhr.send();
+let defaultOption = document.createElement('option');
+defaultOption.text = 'Choose State';
+
+dropdown.add(defaultOption);
+dropdown.selectedIndex = 0;
+
+
+function stateDropdown() {
+    var senators = parsedObj.objects;
+    var senatorState = senators[i].state;
+    
+    for (let i = 0; i < senators.length; i++) {
+    let option;
+      option = document.createElement('option');
+      option.text = senatorState[i];
+      option.value = senatorState[i];
+      dropdown.add(option);
+    
+    document.getElementById('state').innerHTML
+    }
+
     }
 
     function show(ele) {
