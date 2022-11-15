@@ -1,1 +1,142 @@
-font: ;
+h1, h2, h3, h4, h5, h6, p, body, ul, li, a, header, nav, footer, article, source, video, figure, html {
+    margin: 0px;
+    padding: 0px;
+}
+
+.banner {
+    background-image: url(senate_banner.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 450px;
+    text-align: center;
+}
+
+nav {
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-size: 30px;
+}
+
+.reps {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border: black 1px solid;
+    border-collapse: collapse;
+    margin: 20px 0px 20px 0px;
+    text-align: center;
+}
+
+.repsTable th, td, tr {
+    padding: 4px;
+    border: black 1px solid;
+    text-align: center;
+}
+
+.leaders {
+    display: inline-flex;
+    margin: 0px 0px 10px 30px;
+}
+
+.rep {
+    margin-left: 40px;
+}
+
+h3 {
+    margin: 5px;
+}
+
+ul {
+    margin-left: 20px;
+}
+
+div #id02{
+    padding: 10px;
+    border: 2px solid black;
+    background-image: url(democrat.jpg);
+    min-width: 500px;
+    min-height: 180px;
+    width: 100%;
+    
+}
+div #id03{
+    padding: 10px;
+    border: 2px solid black;
+    background-image: url(republican.jpg);
+    min-width: 500px;
+    min-height: 180px;
+    width: 100%;
+    
+}
+
+div #id04{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    
+}
+
+.border {
+    margin: 5px;
+    border: 1px solid black;
+    min-width: 150px;
+    padding: 5px;
+    background-image: url(america.jpg);
+    color: black;
+    opacity: 1;
+}
+button {
+    background-color: red;
+    text-align: center;
+    display: inline-block;
+    color: white;
+}
+.container{
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    ;
+}
+
+/* Popup container - can be anything you want */
+.popup {
+    width: 1030px;
+    border-radius: 6px;
+    position: absolute;
+    text-align: center;
+    color: #333;
+    font-size: 70px;
+    background-color: white;
+    transform: translate(-50%,-50%,);
+    top: 160%;
+    left: 16%;
+    background-color: white;
+    animation-name: example;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+    color: black;
+    
+}
+
+a:link {
+  color: red;
+}
+
+a:visited {
+  color: blue;
+}
+
+a:hover {
+  color: hotpink;
+}
+
+a:active {
+  color: black;
+}
+
