@@ -12,12 +12,13 @@
         </nav>
         
         <div class="banner"></div>
-        
+
         <div class="reps">
             <div id="id01"></div>
         </div>
         
         <div class="leaders">
+            <div class="container">
             <div class="dem">
                 <h3>Democrats</h3>
                 <div id="id02"></div>
@@ -27,16 +28,20 @@
                 <h3>Republicans</h3>
                 <div id="id03"></div>
             </div>
+           </div> 
         </div>
       
         <div id="filters">
             <button class="party" type='button' onclick='partyFilter()'>Democrat</button>
             <button class="party" type='button' onclick='partyFilter()'>Republican</button>
+            
         </div>
         
-        <div id="senatorInfo">
+        <div id="senatorInfo"> 
+            <div id="popup"></div> 
             <div id="id04"></div>
             <div id="detailedInfo"></div>
+            
         </div>
         
         <script>
@@ -76,8 +81,8 @@
                         dem += 1;
                             if (senators[i].leadership_title != null) {
                                 var senatorTitle = senators[i].leadership_title
-                                var senatorLastName = senators[i].person.firstname;
-                                var senatorFirstName = senators[i].person.lastname;
+                                var senatorLastName = senators[i].person.lastname;
+                                var senatorFirstName = senators[i].person.firstname;
                                 var senatorParty = senators[i].party;
                                 demInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
                             }
@@ -85,8 +90,8 @@
                         repub += 1;
                             if (senators[i].leadership_title != null) {
                                 var senatorTitle = senators[i].leadership_title
-                                var senatorLastName = senators[i].person.firstname;
-                                var senatorFirstName = senators[i].person.lastname;
+                                var senatorLastName = senators[i].person.lastname;
+                                var senatorFirstName = senators[i].person.firstname;
                                 var senatorParty = senators[i].party;
                                 repInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
                             }
@@ -115,8 +120,8 @@
                 
                 /* In order to track which button was clicked I dynamically add an class name to each table data element, could expand on this with if statements and add a class name for the party, for the particular state and rank for the filtering dropdown */
                 for (var i=0; i <senators.length; i++) {
-                        var senatorLastName = senators[i].person.firstname;
-                        var senatorFirstName = senators[i].person.lastname;
+                        var senatorLastName = senators[i].person.lastname;
+                        var senatorFirstName = senators[i].person.firstname;
                         var senatorParty = senators[i].party;
                         var senatorState = senators[i].state;
                         var senatorGender = senators[i].person.gender_label;
@@ -132,17 +137,26 @@
                 
                 var senators = parsedObj.objects;
                 var senDetailedInfo = ""
-                var senatorLastName = senators[i].person.firstname;
-                var senatorFirstName = senators[i].person.lastname;
+                var senatorLastName = senators[i].person.lastname;
+                var senatorFirstName = senators[i].person.firstname;
                 var senatorParty = senators[i].party;
                 var senatorState = senators[i].state;
                 var senatorGender = senators[i].person.gender_label;
                 var senatorRank = senators[i].senator_rank_label;
+                var senatorOffice = senators[i].extra.office;
+                var senatorDOB = senators[i].person.birthday;
+                var senatorStartDate = senators[i].startdate;
+                var senatorYoutube = senators[i].person.youtubeid;
+                var senatorTwitter = senators[i].person.twitterid;
+                var senatorWebsite = senators[i].website;
                 
-                senDetailedInfo += "<div class='border "+ i + " " + senatorParty + senatorRank + "'><p>" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button type='button' onclick='senatorInfo(parsedObj)'>Close</button></p></div>";
+                senDetailedInfo += "<div class='popup "+ i + " " + senatorParty + senatorRank + "'><p>" +"Name :" + senatorFirstName + " " + senatorLastName + "</p><p>" +"Party: " +senatorParty + "</p><p>" + "State: " + senatorState + "</p><p>" + "Gender: " + senatorGender +"</p><p>" + "Rank: " +senatorRank + "</p><p>" + "Office : " + senatorOffice + "</p><p>" + "DOB: " + senatorDOB + "</p><p>" +"Start Date: " +senatorStartDate +"</p><p>" + "YoutubeID: " + senatorYoutube + "</p><p>" + "TwitterID: " + senatorTwitter + "</p><p>" +"Website: <a href='" + senatorWebsite + "'target = '_blank'>" + senatorWebsite +"</a>" +"</p><p> <button type='button' onclick='senatorInfo(parsedObj)'>Close</button></p></div>";
                 
-                document.getElementById("id04").innerHTML = null;
                 document.getElementById("detailedInfo").innerHTML = senDetailedInfo;
+            }
+            
+            function websiteHyperlink(){
+                
             }
             
             function partyFilter() {
@@ -161,8 +175,8 @@
                 console.log(filters)
                 /*
                 var partyFilter = ""
-                var senatorLastName = senators[i].person.firstname;
-                var senatorFirstName = senators[i].person.lastname;
+                var senatorLastName = senators[i].person.lastname;
+                var senatorFirstName = senators[i].person.firstname;
                 var senatorParty = senators[i].party;
                 var senatorState = senators[i].state;
                 var senatorGender = senators[i].person.gender_label;
