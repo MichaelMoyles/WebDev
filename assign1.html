@@ -29,15 +29,15 @@
             </div>
         </div>
       
-            <div id="senatorInfo">
-                <div id="id04"></div>
-            </div>
- <!-- 
-            <div id="id06"></div>
+        <div id="filters">
+            <button class="party" type='button' onclick='partyFilter()'>Democrat</button>
+            <button class="party" type='button' onclick='partyFilter()'>Republican</button>
+        </div>
         
-        <div class="senatorInfo">
-            <div id ="id07"></div>
-        </div> -->
+        <div id="senatorInfo">
+            <div id="id04"></div>
+            <div id="detailedInfo"></div>
+        </div>
         
         <script>
             // Initalising a global variable to hold the JSON data
@@ -58,13 +58,13 @@
             
             // Seperate out functions that utilise the JSON data for better readability
             function run(){
-                reps();
-                senatorInfo();
+                reps(parsedObj);
+                senatorInfo(parsedObj);
             };
             
             /* Function that counts the instances of democrat, republican and independents and populates the list of democrats and republicans in leadership positions. All completed in one loop to reduce looping time */
-            function reps() {
-                var senators = parsedObj.objects;
+            function reps(obj) {
+                var senators = obj.objects;
                 var repsTable = "<table class='repsTable'>";
                 var dem = 0;
                 var repub = 0;
@@ -108,54 +108,30 @@
             }
             
             /* Function that creates the 3 senator info tables through one for loop to minimise looping time. All senators are Democrat, Republican or Other (Independent) */
-            function senatorInfo() {
-                //document.getElementById("senatorInfo").innerHTML = null;
-                var senators = parsedObj.objects;
+            function senatorInfo(obj) {
+                document.getElementById("detailedInfo").innerHTML = null;
+                var senators = obj.objects;
                 var senatorTable = "";
                 
                 /* In order to track which button was clicked I dynamically add an class name to each table data element, could expand on this with if statements and add a class name for the party, for the particular state and rank for the filtering dropdown */
                 for (var i=0; i <senators.length; i++) {
-                    if (senators[i].party == "Democrat") {
                         var senatorLastName = senators[i].person.firstname;
                         var senatorFirstName = senators[i].person.lastname;
                         var senatorParty = senators[i].party;
                         var senatorState = senators[i].state;
                         var senatorGender = senators[i].person.gender_label;
                         var senatorRank = senators[i].senator_rank_label;
-                        senatorTable += "<div class='border'><p class="+i+">" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button type='button' onclick='senDetailsBtnClicked("+ i +")'>Details</button></p></div>"; 
-                        
-                    } else if (senators[i].party == "Republican") {
-                        var senatorLastName = senators[i].person.firstname;
-                        var senatorFirstName = senators[i].person.lastname;
-                        var senatorParty = senators[i].party;
-                        var senatorState = senators[i].state;
-                        var senatorGender = senators[i].person.gender_label;
-                        var senatorRank = senators[i].senator_rank_label;
-                        senatorTable += "<div class='border'><p class=republicans,"+i+">" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button type='button' onclick='senDetailsBtnClicked("+i+")'>Details</button></p></div>";
-                        
-                    } else {
-                        var senatorLastName = senators[i].person.firstname;
-                        var senatorFirstName = senators[i].person.lastname;
-                        var senatorParty = senators[i].party;
-                        var senatorState = senators[i].state;
-                        var senatorGender = senators[i].person.gender_label;
-                        var senatorRank = senators[i].senator_rank_label;
-                        senatorTable += "<div class='border'><p class=independents"+i+">" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button type='button' onclick='senDetailsBtnClicked("+i+")'>Details</button></p></p></div>";
-                    }
+                        senatorTable += "<div class='border "+ i + " " + senatorParty + " " + senatorRank + "'><p>" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button type='button' onclick='senDetailsBtnClicked("+ i +")'>Details</button></p></div>";        
                 }
-                
                 document.getElementById("id04").innerHTML = senatorTable;
             }
             
             /* Below is a proof of concept, when the details button is clicked the below runs, taking away the 3 tables and leaving the details tables. Can fix the jumping around later on by making the details table appear in the middle and adding an event to the close that auto brings you back to the class name of the previously clicked details button  */
             
             function senDetailsBtnClicked(i) {
-                document.getElementById("id04").innerHTML = null;
-                document.getElementById("id05").innerHTML = null;
-                document.getElementById("id06").innerHTML = null;
                 
                 var senators = parsedObj.objects;
-                var senDeatiledInfo = "<table>"
+                var senDetailedInfo = ""
                 var senatorLastName = senators[i].person.firstname;
                 var senatorFirstName = senators[i].person.lastname;
                 var senatorParty = senators[i].party;
@@ -163,10 +139,39 @@
                 var senatorGender = senators[i].person.gender_label;
                 var senatorRank = senators[i].senator_rank_label;
                 
-                senDeatiledInfo += "<tr><td class="+i+">" + senatorFirstName + " " + senatorLastName + "</td><td>" + senatorParty + "</td><td>" + senatorState + "</td><td>" + senatorGender +"</td><td>" + senatorRank + "</td><td><button type='button' onclick='senatorInfo()'>Close</button></td></tr>";
-                senDeatiledInfo += "</table>"
+                senDetailedInfo += "<div class='border "+ i + " " + senatorParty + senatorRank + "'><p>" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button type='button' onclick='senatorInfo(parsedObj)'>Close</button></p></div>";
                 
-                document.getElementById("id07").innerHTML = senDeatiledInfo;
+                document.getElementById("id04").innerHTML = null;
+                document.getElementById("detailedInfo").innerHTML = senDetailedInfo;
+            }
+            
+            function partyFilter() {
+                // Remove check for each party in the above for loop, then parse the data differently in the filtering, pass the filters through this function into the above function. Need to pass the object into the function rather than use it in the function itself for this to work
+                var filters = parsedObj.objects;
+                var party = document.getElementsByClassName("party")[0].innerText;
+                var party = document.getElementsByClassName("party")[1].innerText;
+                console.log(party);
+                
+                for (var i=0; i <filters.length; i++) {
+                    if (party != filters[i].party) {
+                        console.log(filters[i].party)
+                        filters.splice(i, 1)
+                    }
+                }
+                console.log(filters)
+                /*
+                var partyFilter = ""
+                var senatorLastName = senators[i].person.firstname;
+                var senatorFirstName = senators[i].person.lastname;
+                var senatorParty = senators[i].party;
+                var senatorState = senators[i].state;
+                var senatorGender = senators[i].person.gender_label;
+                var senatorRank = senators[i].senator_rank_label;
+                
+                senDetailedInfo += "<div class='border democrat "+ i + senatorParty + "'><p>" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button type='button' onclick='senatorInfo()'>Close</button></p></div>";
+                
+                document.getElementById("id04").innerHTML = null;
+                document.getElementById("detailedInfo").innerHTML = senDetailedInfo;*/
             }
             
         </script>
