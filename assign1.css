@@ -1,10 +1,10 @@
-h1, h2, h3, h4, h5, h6, p, body, ul, li, a, header, nav, footer, article, source, video, figure, html {
+h1, h2, h3, h4, h5, h6, p, body, ul, li, a, header, nav, footer, div, article, source, video, figure, html {
     margin: 0px;
     padding: 0px;
 }
 
 .banner {
-    background-image: url(senate_banner.png);
+    background-image: url("../senate_banner.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -19,7 +19,7 @@ nav {
     font-size: 30px;
 }
 
-.reps {
+.total_section {
     display: flex;
     justify-content: center;
 }
@@ -31,7 +31,7 @@ table {
     text-align: center;
 }
 
-.repsTable th, td, tr {
+.representTable th, td, tr {
     padding: 4px;
     border: black 1px solid;
     text-align: center;
@@ -54,7 +54,7 @@ ul {
     margin-left: 20px;
 }
 
-div #id02{
+#demInfo{
     padding: 10px;
     border: 2px solid black;
     background-image: url(democrat.jpg);
@@ -63,7 +63,8 @@ div #id02{
     width: 100%;
     
 }
-div #id03{
+
+#repInfo{
     padding: 10px;
     border: 2px solid black;
     background-image: url(republican.jpg);
@@ -73,14 +74,15 @@ div #id03{
     
 }
 
-div #id04{
+#senatorsSection {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     
 }
 
-.border {
+.eachSenator {
+    display: none; /* Hidden by default */
     margin: 5px;
     border: 1px solid black;
     min-width: 150px;
@@ -89,19 +91,12 @@ div #id04{
     color: black;
     opacity: 1;
 }
+
 button {
     background-color: red;
     text-align: center;
     display: inline-block;
     color: white;
-}
-.container{
-    width: 100%;
-    height: 40vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    ;
 }
 
 /* Popup container - can be anything you want */
@@ -140,3 +135,58 @@ a:active {
   color: black;
 }
 
+/* MM CSS Code */
+
+/* The "show" class is added to the filtered elements */
+.show {
+  display: block;
+}
+
+#senatorInfo {
+    min-height: 300px;
+}
+
+.state {
+    float: right;
+    cursor: default;
+}
+
+.state li {
+    list-style-type: none;
+    margin: 20px;
+}
+
+#drop_content {
+    display: none;
+}
+
+.state:hover #drop_content {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    background-color: white;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left {
+    display: flex;
+    float: left;
+}
+
+.filter button {
+    float: right;
+}
+
+#noData {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
