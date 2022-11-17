@@ -57,20 +57,23 @@ ul {
 #demInfo{
     padding: 10px;
     border: 2px solid black;
-    background-image: url(democrat.jpg);
+    background-image: url(images/democrat.jpg);
     min-width: 500px;
     min-height: 180px;
     width: 100%;
-    
+    font-size: 17px;
+    text-decoration-color: black;
 }
 
 #repInfo{
     padding: 10px;
     border: 2px solid black;
-    background-image: url(republican.jpg);
+    background-image: url(images/republican.jpg);
     min-width: 500px;
     min-height: 180px;
     width: 100%;
+    font-size: 17px;
+    text-decoration-color: black;
     
 }
 
@@ -87,7 +90,7 @@ ul {
     border: 1px solid black;
     min-width: 150px;
     padding: 5px;
-    background-image: url(america.jpg);
+    background-image: url(images/america.jpg);
     color: black;
     opacity: 1;
 }
@@ -107,15 +110,14 @@ button {
     text-align: center;
     color: #333;
     font-size: 70px;
-    background-color: white;
+    background-color: black;
     transform: translate(-50%,-50%,);
     top: 160%;
     left: 16%;
-    background-color: white;
-    animation-name: example;
+    background-color: black;
     animation-duration: 15s;
     animation-iteration-count: infinite;
-    color: black;
+    color: white;
     
 }
 
@@ -149,11 +151,17 @@ a:active {
 .state {
     float: right;
     cursor: default;
+    background-color: red;
+    color: white;
+    border-color: black;
+    text-align: center;
+    display: inline-block;
 }
 
 .state li {
     list-style-type: none;
     margin: 20px;
+    background-color: red;
 }
 
 #drop_content {
@@ -164,7 +172,7 @@ a:active {
     display: flex;
     flex-wrap: wrap;
     position: absolute;
-    background-color: white;
+    background-color: red;
 }
 
 .filters {
