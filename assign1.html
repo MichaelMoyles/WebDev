@@ -102,8 +102,8 @@
                         dem += 1;
                             if (senators[i].leadership_title != null) {
                                 var senatorTitle = senators[i].leadership_title
-                                var senatorLastName = senators[i].person.firstname;
-                                var senatorFirstName = senators[i].person.lastname;
+                                var senatorLastName = senators[i].person.lastname;
+                                var senatorFirstName = senators[i].person.firstname;
                                 var senatorParty = senators[i].party;
                                 demInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
                             }
@@ -111,8 +111,8 @@
                         repub += 1;
                             if (senators[i].leadership_title != null) {
                                 var senatorTitle = senators[i].leadership_title
-                                var senatorLastName = senators[i].person.firstname;
-                                var senatorFirstName = senators[i].person.lastname;
+                                var senatorLastName = senators[i].person.lastname;
+                                var senatorFirstName = senators[i].person.firstname;
                                 var senatorParty = senators[i].party;
                                 repInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
                             }
@@ -226,6 +226,7 @@
                 
                 senDetailedInfo += "<div class='popup "+ item + " " + senatorParty + senatorRank + "'><p>" +"Name :" + senatorFirstName + " " + senatorLastName + "</p><p>" +"Party: " +senatorParty + "</p><p>" + "State: " + senatorState + "</p><p>" + "Gender: " + senatorGender +"</p><p>" + "Rank: " +senatorRank + "</p><p>" + "Office : " + senatorOffice + "</p><p>" + "DOB: " + senatorDOB + "</p><p>" +"Start Date: " +senatorStartDate +"</p><p>" + "YoutubeID: " + senatorYoutube + "</p><p>" + "TwitterID: " + senatorTwitter + "</p><p>" +"Website: <a href='" + senatorWebsite + "'target = '_blank'>" + senatorWebsite +"</a>" +"</p><p> <button type='button' onclick='senatorInfo()'>Close</button></p></div>";
                 document.getElementById("detailedInfo").innerHTML = senDetailedInfo;
+                
             }
             
             /* This disables the filters when the detailed info on each senator popup is open*/
