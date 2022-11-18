@@ -4,7 +4,7 @@ h1, h2, h3, h4, h5, h6, p, body, ul, li, a, header, nav, footer, div, article, s
 }
 
 .banner {
-    background-image: url("../senate_banner.png");
+    background-image: url("./senate_banner.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -38,14 +38,14 @@ table {
 }
 
 .leaders {
-    display: inline-flex;
+   /* display: inline-flex; */
     margin: 0px 0px 10px 30px;
 }
-
+/*
 .rep {
     margin-left: 40px;
 }
-
+*/
 h3 {
     margin: 5px;
 }
@@ -53,11 +53,11 @@ h3 {
 ul {
     margin-left: 20px;
 }
-
+/*
 #demInfo{
     padding: 10px;
     border: 2px solid black;
-    background-image: url(images/democrat.jpg);
+    background-image: url(.images/democrat.jpg);
     min-width: 500px;
     min-height: 180px;
     width: 100%;
@@ -74,9 +74,8 @@ ul {
     width: 100%;
     font-size: 17px;
     text-decoration-color: black;
-    
 }
-
+*/
 #senatorsSection {
     display: flex;
     justify-content: center;
@@ -90,7 +89,7 @@ ul {
     border: 1px solid black;
     min-width: 150px;
     padding: 5px;
-    background-image: url(images/america.jpg);
+    background-image: url(.images/america.jpg);
     color: black;
     opacity: 1;
 }
@@ -110,7 +109,7 @@ button {
     text-align: center;
     color: #333;
     font-size: 70px;
-    background-color: black;
+    background-color: white;
     transform: translate(-50%,-50%,);
     top: 160%;
     left: 16%;
@@ -139,7 +138,7 @@ a:active {
 
 /* MM CSS Code */
 
-/* The "show" class is added to the filtered elements */
+/* The "show" class is added to divs from the filter() function */
 .show {
   display: block;
 }
@@ -195,6 +194,7 @@ a:active {
     align-items: center;
 }
 
+/* The "hide" class is added to popup when the close button is clicked */
 .hide {
     display: none;
 }
