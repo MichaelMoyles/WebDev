@@ -17,8 +17,11 @@
             <div id="total_table"></div>
         </div>
         
+        
         <div class="leaders">
-            <div class="dem">
+            <h3>Senate Leadership</h3>
+            <div id="partyList"></div>
+           <!-- <div class="dem">
                 <h3>Democrats</h3>
                 <div id="demInfo"></div>
             </div>
@@ -26,7 +29,7 @@
             <div class="rep">
                 <h3>Republicans</h3>
                 <div id="repInfo"></div>
-            </div>
+            </div> -->
         </div>
         
         <!-- Filters section of the webpage -->
@@ -75,7 +78,7 @@
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     parsedObj = JSON.parse(xmlhttp.responseText);
-                    run()
+                    run();
                 }
             };
             
@@ -88,36 +91,29 @@
                 senatorInfo();
             };
             
-            /* Function that counts the instances of democrat, republican and independents and populates the list of democrats and republicans in leadership positions. All completed in one loop to reduce looping time */
+            /* Function that counts the instances of democrat, republican and independents and populates the list of senators in leadership positions. All completed in one loop to reduce looping time */
             function reps() {
                 var senators = parsedObj.objects;
                 var representTable = "<table class='representTable'>";
                 var dem = 0;
                 var repub = 0;
                 var ind = 0;
-                var demInfo = "<ul>";
-                var repInfo = "<ul>";
+                var partyList = "<ul>";
                 for (var i=0; i <senators.length; i++) {   
                     if (senators[i].party == "Democrat") {
                         dem += 1;
-                            if (senators[i].leadership_title != null) {
-                                var senatorTitle = senators[i].leadership_title
-                                var senatorLastName = senators[i].person.lastname;
-                                var senatorFirstName = senators[i].person.firstname;
-                                var senatorParty = senators[i].party;
-                                demInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
-                            }
                     } else if (senators[i].party == "Republican") {
                         repub += 1;
-                            if (senators[i].leadership_title != null) {
-                                var senatorTitle = senators[i].leadership_title
-                                var senatorLastName = senators[i].person.lastname;
-                                var senatorFirstName = senators[i].person.firstname;
-                                var senatorParty = senators[i].party;
-                                repInfo += "<li>" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
-                            }
                     } else {
-                        ind += 1 //There are no independents in leadership positions
+                        ind += 1
+                    }
+                    
+                    if (senators[i].leadership_title != null) {
+                        var senatorTitle = senators[i].leadership_title
+                        var senatorFirstName = senators[i].person.firstname;
+                        var senatorLastName = senators[i].person.lastname;
+                        var senatorParty = senators[i].party;
+                        partyList += "<li class=" + senatorParty + ">" + senatorTitle + ": " + senatorFirstName + " " + senatorLastName + " (" + senatorParty + ")" + "</li>";
                     }
                 }
                 
@@ -125,12 +121,36 @@
                 representTable += "<tr><td>Democrats</td><td>Republicans</td><td>Independents</td></tr>";
                 representTable += "<tr><td>" + dem + "</td><td>" + repub + "</td><td>" + ind + "</td></tr></table>";
                 
-                demInfo += "</ul>";
-                repInfo += "</ul>";
+                partyList += "</ul>";
                 
                 document.getElementById("total_table").innerHTML = representTable;
-                document.getElementById("demInfo").innerHTML = demInfo;
-                document.getElementById("repInfo").innerHTML = repInfo;
+                document.getElementById("partyList").innerHTML = partyList;
+                sortList();
+            }
+            
+            
+            /* The below function sorts the list by the party in the text after the bracket thereby grouping them */
+            /* Ref: https://www.w3schools.com/howto/howto_js_sort_list.asp */
+            function sortList() {
+                var list, i, switching, b, shouldSwitch;
+                list = document.getElementById("partyList");
+                switching = true;
+                while (switching) {
+                    switching = false;
+                    b = list.getElementsByTagName("li");
+                    for (i = 0; i < (b.length-1); i++) {
+                        shouldSwitch = false;
+                        if (b[i].innerHTML.split("(")[1].toLowerCase() > b[i + 1].innerHTML.split("(")[1].toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    
+                    if (shouldSwitch) {
+                        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+                        switching = true;
+                    }
+                }
             }
             
             // Sets to hold the name of all parties, ranks and states in the JSON file
@@ -140,10 +160,6 @@
             
             /* Function that creates the div's for each senator */
             function senatorInfo() {
-                document.getElementById("detailedInfo").innerHTML = null;
-                document.getElementById("resetButton").disabled = false;
-                document.getElementById("dropdown").classList.remove("hide");
-                
                 var senatorsArray = parsedObj.objects;
                 
                 var senatorsSection = "";
@@ -151,7 +167,7 @@
                 var rankFilter = "";
                 var stateFilter = "";
                 
-                /* To sort the divs, sequential loops run through the senators and pass them to another function updateSenatorsSection */
+                /* To sort the divs, sequential loops run through the senators and pass them to another function updateSenatorsSection and create each of the divs */
                 for (var i=0; i <senatorsArray.length; i++) {
                     if(senatorsArray[i].party == "Democrat")
                         senatorsSection += updateSenatorsSection(senatorsArray, i);
@@ -192,14 +208,14 @@
                 var senatorFirstName = array[item].person.firstname;
                 var senatorLastName = array[item].person.lastname;
                 var senatorParty = array[item].party;
-                var senatorState = array[item].state;
+                var senatorState = array[item].description.split("for ")[1]
                 var senatorGender = array[item].person.gender_label;
                 var senatorRank = array[item].senator_rank_label;
                 eachSenatorBox = "<div class='eachSenator show "+ item + " " + senatorParty + " " + senatorRank + " " + senatorState + "'><p>" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button type='button' onclick='senDetailsBtnClicked("+item+")'>Details</button></p></div>";
                 
                 partySet.add(array[item].party);
                 rankSet.add(array[item].senator_rank_label);
-                stateSet.add(array[item].state);
+                stateSet.add(array[item].description.split("for ")[1]);
                 
                 return eachSenatorBox
             }
@@ -214,7 +230,7 @@
                 var senatorFirstName = senators[item].person.firstname;
                 var senatorLastName = senators[item].person.lastname;
                 var senatorParty = senators[item].party;
-                var senatorState = senators[item].state;
+                var senatorState = array[item].description.split("for ")[1]
                 var senatorGender = senators[item].person.gender_label;
                 var senatorRank = senators[item].senator_rank_label;
                 var senatorOffice = senators[item].extra.office;
@@ -224,9 +240,9 @@
                 var senatorTwitter = senators[item].person.twitterid;
                 var senatorWebsite = senators[item].website;
                 
-                senDetailedInfo += "<div class='popup "+ item + " " + senatorParty + senatorRank + "'><p>" +"Name :" + senatorFirstName + " " + senatorLastName + "</p><p>" +"Party: " +senatorParty + "</p><p>" + "State: " + senatorState + "</p><p>" + "Gender: " + senatorGender +"</p><p>" + "Rank: " +senatorRank + "</p><p>" + "Office : " + senatorOffice + "</p><p>" + "DOB: " + senatorDOB + "</p><p>" +"Start Date: " +senatorStartDate +"</p><p>" + "YoutubeID: " + senatorYoutube + "</p><p>" + "TwitterID: " + senatorTwitter + "</p><p>" +"Website: <a href='" + senatorWebsite + "'target = '_blank'>" + senatorWebsite +"</a>" +"</p><p> <button type='button' onclick='senatorInfo()'>Close</button></p></div>";
+                senDetailedInfo += "<div class='popup "+ item + " " + senatorParty + senatorRank + "'><p>" +"Name :" + senatorFirstName + " " + senatorLastName + "</p><p>" +"Party: " +senatorParty + "</p><p>" + "State: " + senatorState + "</p><p>" + "Gender: " + senatorGender +"</p><p>" + "Rank: " +senatorRank + "</p><p>" + "Office : " + senatorOffice + "</p><p>" + "DOB: " + senatorDOB + "</p><p>" +"Start Date: " +senatorStartDate +"</p><p>" + "YoutubeID: " + senatorYoutube + "</p><p>" + "TwitterID: " + senatorTwitter + "</p><p>" +"Website: <a href='" + senatorWebsite + "'target = '_blank'>" + senatorWebsite +"</a>" +"</p><p> <button type='button' onclick='removePopUp()'>Close</button></p></div>";
                 document.getElementById("detailedInfo").innerHTML = senDetailedInfo;
-                
+                document.getElementById("detailedInfo").style.display = "block";
             }
             
             /* This disables the filters when the detailed info on each senator popup is open*/
@@ -247,12 +263,22 @@
                 document.getElementById("resetButton").disabled = true;
             }
             
-            // storing variables WIP - ignore
-            function storeFilters(partyFilter, rankFilter, stateFilter) {
-                var storePartyFilter = partyFilter;
-                var storeRankFilter = rankFilter;
-                var storeStateFilter = stateFilter;
-                return storePartyFilter, storeRankFilter, storeStateFilter
+            /* When the close button of the popup is clicked, this function executes that re-enables the filtering and removes the popup  */
+            function removePopUp() {
+                document.getElementById("detailedInfo").style.display = "none";
+                document.getElementById("resetButton").disabled = false;
+                document.getElementById("dropdown").classList.remove("hide");
+                for(var item of partySet) {
+                    document.getElementById("filter"+item).disabled = false;
+                }
+                
+                for(var item of rankSet) {
+                    document.getElementById("filter"+item).disabled = false;
+                }
+                
+                for(var item of stateSet) {
+                    document.getElementById("filter"+item).disabled = false;
+                }
             }
             
             /* On click of the filters, the below function will execute. It checks for all instances of checked checkboxes and appends them to a list.  */
@@ -287,10 +313,8 @@
                     }
                 }
                 
-                // storing variables WIP - ignore
-                //var store = storeFilters(partyFilter, rankFilter, stateFilter)
-                
                 /* For each senator, if the filter is in the class name of the senator it will add the CSS show rule to display the particular senator. For party, rank and state, it will return the union of the filters. Combining filters e.g. party and rank will return the intersection of parties and ranks */
+                /* Ref: https://www.w3schools.com/howto/howto_js_filter_elements.asp; https://w3schools.invisionzone.com/topic/61299-appling-multiple-filters-to-div-elements/ */
                 var items = document.querySelectorAll(".eachSenator");
                 var item, show;
                 var counter = 0;
@@ -375,7 +399,8 @@
                         }
                     }
                     }
-                    /* Counts the number of instances of show and not show CSS rule being applied, when the rule has not been applied 100 times, across all 100 individual senators there is no senator matching that combination */
+                    
+                    /* Counts the number of instances of show and not show CSS rule being applied, when the rule has not been applied 100 times, across all 100 individual senators there are no senators matching that combination */
                     if(show) {
                         item.classList.add("show");
                         counter -= 1;
@@ -386,7 +411,7 @@
                         item.classList.remove("show");
                         counter += 1
                         if (counter == 100) {
-                            var noData = "<p>There is no senator matching that combination of filters</p>"
+                            var noData = "<p>There are no senators matching that combination of filters</p>"
                             document.getElementById("noData").innerHTML = noData;
                         }
                     }
