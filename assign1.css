@@ -4,7 +4,7 @@ h1, h2, h3, h4, h5, h6, p, body, ul, li, a, header, nav, footer, div, article, s
 }
 
 .banner {
-    background-image: url("./senate_banner.png");
+    background-image: url("images/senate_banner.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -38,14 +38,24 @@ table {
 }
 
 .leaders {
-   /* display: inline-flex; */
-    margin: 0px 0px 10px 30px;
+    background-image: url(images/DemvRep.jpg);
+    border: 2px solid black;
+    max-width: 1000px;
+    min-height: 450px;
+    font-size: 24px;
+    align-items: center;
+    place-content: center;
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+    
+    
 }
-/*
+
 .rep {
     margin-left: 40px;
 }
-*/
+
 h3 {
     margin: 5px;
 }
@@ -53,29 +63,8 @@ h3 {
 ul {
     margin-left: 20px;
 }
-/*
-#demInfo{
-    padding: 10px;
-    border: 2px solid black;
-    background-image: url(.images/democrat.jpg);
-    min-width: 500px;
-    min-height: 180px;
-    width: 100%;
-    font-size: 17px;
-    text-decoration-color: black;
-}
 
-#repInfo{
-    padding: 10px;
-    border: 2px solid black;
-    background-image: url(images/republican.jpg);
-    min-width: 500px;
-    min-height: 180px;
-    width: 100%;
-    font-size: 17px;
-    text-decoration-color: black;
-}
-*/
+
 #senatorsSection {
     display: flex;
     justify-content: center;
@@ -89,8 +78,8 @@ ul {
     border: 1px solid black;
     min-width: 150px;
     padding: 5px;
-    background-image: url(.images/america.jpg);
-    color: black;
+    background-image: url(images/america.jpg);
+    color: white;
     opacity: 1;
 }
 
@@ -107,35 +96,26 @@ button {
     border-radius: 6px;
     position: absolute;
     text-align: center;
-    color: #333;
     font-size: 70px;
-    background-color: white;
     transform: translate(-50%,-50%,);
-    top: 160%;
+    top: 180%;
     left: 16%;
     background-color: black;
-    animation-duration: 15s;
-    animation-iteration-count: infinite;
     color: white;
     
 }
-
 a:link {
   color: red;
 }
-
 a:visited {
   color: blue;
 }
-
 a:hover {
   color: hotpink;
 }
-
 a:active {
   color: black;
 }
-
 /* MM CSS Code */
 
 /* The "show" class is added to divs from the filter() function */
@@ -148,13 +128,13 @@ a:active {
 }
 
 .state {
-    float: right;
     cursor: default;
     background-color: red;
     color: white;
     border-color: black;
-    text-align: center;
-    display: inline-block;
+    justify-content: center;
+    text-transform:uppercase;
+    font-weight:bold;
 }
 
 .state li {
@@ -177,11 +157,19 @@ a:active {
 .filters {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .left {
-    display: flex;
-    float: left;
+    display: block;
+    padding: 10px;
+    width:300px;
+    font-weight:bold;
+    color:white;
+    background-color:red;
+    text-transform:uppercase;
+    text-align:center;
+    padding:4px;  
 }
 
 .filter button {
@@ -197,4 +185,22 @@ a:active {
 /* The "hide" class is added to popup when the close button is clicked */
 .hide {
     display: none;
+}
+
+.party{
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    
+}
+.rank{
+    display: inline-block;
+    padding: 1px;
+    
+}
+
+.container{
+    width: 250px; 
+    margin: 10px auto;
+
 }
