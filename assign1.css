@@ -129,7 +129,7 @@ a:active {
 
 .state {
     cursor: default;
-    background-color: red;
+    background-color: blue;
     color: white;
     border-color: black;
     justify-content: center;
@@ -140,7 +140,7 @@ a:active {
 .state li {
     list-style-type: none;
     margin: 20px;
-    background-color: red;
+    background-color: blue;
 }
 
 #drop_content {
@@ -151,25 +151,13 @@ a:active {
     display: flex;
     flex-wrap: wrap;
     position: absolute;
-    background-color: red;
+    background-color: blue;
 }
 
 .filters {
     display: flex;
     justify-content: space-between;
     
-}
-
-.left {
-    display: block;
-    padding: 10px;
-    width:300px;
-    font-weight:bold;
-    color:white;
-    background-color:red;
-    text-transform:uppercase;
-    text-align:center;
-    padding:4px;  
 }
 
 .filter button {
@@ -188,19 +176,27 @@ a:active {
 }
 
 .party{
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
+    
     
 }
 .rank{
-    display: inline-block;
-    padding: 1px;
-    
+
 }
 
 .container{
-    width: 250px; 
-    margin: 10px auto;
+    width: 300px; 
+    margin: 10px;
 
 }
+.left {
+    display: block;
+    padding: 10px;
+    width:300px;
+    font-weight:bold;
+    color:white;
+    background-color:red;
+    text-transform:uppercase;
+    text-align:center;
+    padding:4px;  
+}
+
