@@ -1,10 +1,10 @@
-h1, h2, h3, h4, h5, h6, p, body, ul, li, a, header, nav, footer, article, source, video, figure, html {
+h1, h2, h3, h4, h5, h6, p, body, ul, li, a, header, nav, footer, div, article, source, video, figure, html {
     margin: 0px;
     padding: 0px;
 }
 
 .banner {
-    background-image: url(senate_banner.png);
+    background-image: url("images/senate_banner.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -19,7 +19,7 @@ nav {
     font-size: 30px;
 }
 
-.reps {
+.total_section {
     display: flex;
     justify-content: center;
 }
@@ -31,15 +31,25 @@ table {
     text-align: center;
 }
 
-.repsTable th, td, tr {
+.representTable th, td, tr {
     padding: 4px;
     border: black 1px solid;
     text-align: center;
 }
 
 .leaders {
-    display: inline-flex;
-    margin: 0px 0px 10px 30px;
+    background-image: url(images/DemvRep.jpg);
+    border: 2px solid black;
+    max-width: 1000px;
+    min-height: 450px;
+    font-size: 24px;
+    align-items: center;
+    place-content: center;
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+    
+    
 }
 
 .rep {
@@ -54,54 +64,30 @@ ul {
     margin-left: 20px;
 }
 
-div #id02{
-    padding: 10px;
-    border: 2px solid black;
-    background-image: url(democrat.jpg);
-    min-width: 500px;
-    min-height: 180px;
-    width: 100%;
-    
-}
-div #id03{
-    padding: 10px;
-    border: 2px solid black;
-    background-image: url(republican.jpg);
-    min-width: 500px;
-    min-height: 180px;
-    width: 100%;
-    
-}
 
-div #id04{
+#senatorsSection {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     
 }
 
-.border {
+.eachSenator {
+    display: none; /* Hidden by default */
     margin: 5px;
     border: 1px solid black;
     min-width: 150px;
     padding: 5px;
-    background-image: url(america.jpg);
-    color: black;
+    background-image: url(images/america.jpg);
+    color: white;
     opacity: 1;
 }
+
 button {
     background-color: red;
     text-align: center;
     display: inline-block;
     color: white;
-}
-.container{
-    width: 100%;
-    height: 40vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    ;
 }
 
 /* Popup container - can be anything you want */
@@ -110,33 +96,106 @@ button {
     border-radius: 6px;
     position: absolute;
     text-align: center;
-    color: #333;
     font-size: 70px;
-    background-color: white;
     transform: translate(-50%,-50%,);
-    top: 160%;
+    top: 180%;
     left: 16%;
-    background-color: white;
-    animation-name: example;
-    animation-duration: 15s;
-    animation-iteration-count: infinite;
-    color: black;
+    background-color: black;
+    color: white;
     
 }
-
 a:link {
   color: red;
 }
-
 a:visited {
   color: blue;
 }
-
 a:hover {
   color: hotpink;
 }
-
 a:active {
   color: black;
 }
+/* MM CSS Code */
 
+/* The "show" class is added to divs from the filter() function */
+.show {
+  display: block;
+}
+
+#senatorInfo {
+    min-height: 300px;
+}
+
+.state {
+    cursor: default;
+    background-color: blue;
+    color: white;
+    border-color: black;
+    justify-content: center;
+    text-transform:uppercase;
+    font-weight:bold;
+}
+
+.state li {
+    list-style-type: none;
+    margin: 20px;
+    background-color: blue;
+}
+
+#drop_content {
+    display: none;
+}
+
+.state:hover #drop_content {
+    display: flex;
+    flex-wrap: wrap;
+    position: absolute;
+    background-color: blue;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.filter button {
+    float: right;
+}
+
+#noData {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+/* The "hide" class is added to popup when the close button is clicked */
+.hide {
+    display: none;
+}
+
+.party{
+    
+    
+}
+.rank{
+
+}
+
+.container{
+    width: 300px; 
+    margin: 10px;
+
+}
+.left {
+    display: block;
+    padding: 10px;
+    width:300px;
+    font-weight:bold;
+    color:white;
+    background-color:red;
+    text-transform:uppercase;
+    text-align:center;
+    padding:4px;  
+}
