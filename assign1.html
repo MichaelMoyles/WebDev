@@ -50,7 +50,7 @@
                 </ul>
             </div>
             
-            <button id="resetButton" type="button" onclick="senatorInfo(uniqueSets())">Reset Filters</button>
+            <button id="resetButton" type="button" onclick="senatorInfo(uniqueLists())">Reset Filters</button>
             
         </div>
         
@@ -80,32 +80,35 @@
             
             // Seperate out functions that utilise the JSON data for better readability
             function run(){
-                uniqueSets();
-                reps(uniqueSets());
-                senatorInfo(uniqueSets());
-            };
+                uniqueLists();
+                reps(uniqueLists());
+                senatorInfo(uniqueLists());
+            }
             
             // Adds to a set the unique party, rank and state information from each senator
-            function uniqueSets() {
+            function uniqueLists() {
                 var senatorsArray = parsedObj.objects;
-                var partySet = new Set();
-                var rankSet = new Set();
-                var stateSet = new Set();
+                var partyList = [];
+                var rankList = [];
+                var stateList = [];
                 
                 for (var i=0; i <senatorsArray.length; i++) {
-                    partySet.add(senatorsArray[i].party);
+                    if (partyList.indexOf(senatorsArray[i].party) == -1) {
+                        partyList.push(senatorsArray[i].party);
+                    }
+                    
+                    if (rankList.indexOf(senatorsArray[i].senator_rank_label) == -1) {
+                        rankList.push(senatorsArray[i].senator_rank_label);
+                    }
+                    
+                    if (stateList.indexOf(senatorsArray[i].description.split("for ")[1]) == -1) {
+                        stateList.push(senatorsArray[i].description.split("for ")[1]);
+                    }
+                    
                 }
-                
-                for (var i=0; i <senatorsArray.length; i++) {
-                    rankSet.add(senatorsArray[i].senator_rank_label);
-                }
-                
-                for (var i=0; i <senatorsArray.length; i++) {
-                    stateSet.add(senatorsArray[i].description.split("for ")[1]);
-                }
-                
-                return [partySet, rankSet, stateSet];
-            };
+
+                return [partyList, rankList, stateList];
+            }
             
             /* Function that counts the instances of democrat, republican and independents and populates the list of senators in leadership positions */
             function reps(setsInfo) {
@@ -114,12 +117,14 @@
                 var partyList = "<ul>";
                 var partyObj = {};
                 
-                for(var item of setsInfo[0]) {
-                    for (var i=0; i <senatorsArray.length; i++) {
-                        if (senatorsArray[i].party == item && partyObj.hasOwnProperty(item) == false) {
-                            partyObj[item] = 1;
-                        } else if (senatorsArray[i].party == item){
-                            partyObj[item] += 1;
+                for(var i=0; i < setsInfo[0].length; i++) {
+                    for (var j=0; j <senatorsArray.length; j++) {
+                        
+                        if (senatorsArray[j].party == setsInfo[0][i] && partyObj.hasOwnProperty(setsInfo[0][i]) == false) {
+                            partyObj[setsInfo[0][i]] = 1;
+                        
+                        } else if (senatorsArray[j].party == setsInfo[0][i]) {
+                            partyObj[setsInfo[0][i]] += 1;
                         }
                     }
                 }
@@ -130,19 +135,19 @@
                 representTable += "Number of Representatives</th></tr>";
                 representTable += "<tr>";
                 
-                for(var item in partyObj) {
-                    representTable += "<td>" + item + "s</td>";
+                for(var i=0; i < Object.keys(partyObj).length; i++) {
+                    representTable += "<td>" + Object.keys(partyObj)[i] + "s</td>";
                 }
                 
-                representTable += "</tr>"
+                representTable += "</tr>";
                 
-                for(var item in partyObj) {
-                    representTable += "<td>" + partyObj[item] + "</td>";
+                for(var i=0; i < Object.keys(partyObj).length; i++) {
+                    representTable += "<td>" + Object.values(partyObj)[i] + "</td>";
                 }
                 
                 for (var i=0; i <senatorsArray.length; i++) {
                     if (senatorsArray[i].leadership_title != null) {
-                        var senatorTitle = senatorsArray[i].leadership_title
+                        var senatorTitle = senatorsArray[i].leadership_title;
                         var senatorFirstName = senatorsArray[i].person.firstname;
                         var senatorLastName = senatorsArray[i].person.lastname;
                         var senatorParty = senatorsArray[i].party;
@@ -194,22 +199,22 @@
                 var rankFilter = "";
                 var stateFilter = "";
                 
-                for(var item of setsInfo[0]) {
-                    partyFilter += "<input type='checkbox' value='" + item + "' id='filter"+ item +"' onclick='filter()'><label for='filter" + item + "'>"+ item + "</label><br>"
+                for(var i=0; i < Object.keys(setsInfo[0]).length; i++) {
+                    partyFilter += "<input type='checkbox' value='" + setsInfo[0][i] + "' id='filter"+ setsInfo[0][i] +"' onclick='filter()'><label for='filter" + setsInfo[0][i] + "'>"+ setsInfo[0][i] + "</label><br>";
                     
-                    for (var i=0; i <senatorsArray.length; i++) {
-                        if(senatorsArray[i].party == item) {
-                            senatorsSection += updateSenatorsSection(senatorsArray, i);
+                    for (var j=0; j <senatorsArray.length; j++) {
+                        if(senatorsArray[j].party == setsInfo[0][i]) {
+                            senatorsSection += updateSenatorsSection(senatorsArray, j);
                         }
                     }
                 }
                 
-                for(var item of setsInfo[1]) {
-                    rankFilter += "<input type='checkbox' value='" + item + "' id='filter"+ item +"' onclick='filter()'><label for='filter" + item + "'>"+ item + "</label><br>"
+                for(var i=0; i < Object.keys(setsInfo[1]).length; i++) {
+                    rankFilter += "<input type='checkbox' value='" + setsInfo[1][i] + "' id='filter"+ setsInfo[1][i] +"' onclick='filter()'><label for='filter" + setsInfo[1][i] + "'>"+ setsInfo[1][i] + "</label><br>";
                 }
                 
-                for(var item of setsInfo[2]) {
-                    stateFilter += "<li><input type='checkbox' value='" + item + "' id='filter"+ item +"' onclick='filter()'><label for='filter" + item + "'>"+ item + "</label></li>"
+                for(var i=0; i < Object.keys(setsInfo[2]).length; i++) {
+                    stateFilter += "<li><input type='checkbox' value='" + setsInfo[2][i] + "' id='filter"+ setsInfo[2][i] +"' onclick='filter()'><label for='filter" + setsInfo[2][i] + "'>"+ setsInfo[2][i] + "</label></li>";
                 }
                 
                 document.getElementById("partyFilter").innerHTML = partyFilter;
@@ -224,25 +229,25 @@
                 var senatorFirstName = array[item].person.firstname;
                 var senatorLastName = array[item].person.lastname;
                 var senatorParty = array[item].party;
-                var senatorState = array[item].description.split("for ")[1]
+                var senatorState = array[item].description.split("for ")[1];
                 var senatorGender = array[item].person.gender_label;
                 var senatorRank = array[item].senator_rank_label;
                 var eachSenatorBox = "<div class='eachSenator show "+ item + " " + senatorParty + " " + senatorRank + " " + senatorState + "'><p>" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button type='button' onclick='senDetailsBtnClicked("+item+")'>Details</button></p></div>";
                 
-                return eachSenatorBox
+                return eachSenatorBox;
             }
             
             /* Function that executes when the user clicks for more details about a particular senator */
             function senDetailsBtnClicked(item) {
                 
-                disableFilters(uniqueSets());
+                disableFilters(uniqueLists());
                 
                 var senators = parsedObj.objects;
-                var senDetailedInfo = ""
+                var senDetailedInfo = "";
                 var senatorFirstName = senators[item].person.firstname;
                 var senatorLastName = senators[item].person.lastname;
                 var senatorParty = senators[item].party;
-                var senatorState = senators[item].description.split("for ")[1]
+                var senatorState = senators[item].description.split("for ")[1];
                 var senatorGender = senators[item].person.gender_label;
                 var senatorRank = senators[item].senator_rank_label;
                 var senatorOffice = senators[item].extra.office;
@@ -252,7 +257,7 @@
                 var senatorTwitter = senators[item].person.twitterid;
                 var senatorWebsite = senators[item].website;
                 
-                senDetailedInfo += "<div class='popup "+ item + " " + senatorParty + senatorRank + "'><p>" +"Name :" + senatorFirstName + " " + senatorLastName + "</p><p>" +"Party: " +senatorParty + "</p><p>" + "State: " + senatorState + "</p><p>" + "Gender: " + senatorGender +"</p><p>" + "Rank: " +senatorRank + "</p><p>" + "Office : " + senatorOffice + "</p><p>" + "DOB: " + senatorDOB + "</p><p>" +"Start Date: " +senatorStartDate +"</p><p>" + "YoutubeID: " + senatorYoutube + "</p><p>" + "TwitterID: " + senatorTwitter + "</p><p>" +"Website: <a href='" + senatorWebsite + "'target = '_blank'>" + senatorWebsite +"</a>" +"</p><p> <button type='button' onclick='removePopUp(uniqueSets())'>Close</button></p></div>";
+                senDetailedInfo += "<div class='popup "+ item + " " + senatorParty + senatorRank + "'><p>" +"Name :" + senatorFirstName + " " + senatorLastName + "</p><p>" +"Party: " +senatorParty + "</p><p>" + "State: " + senatorState + "</p><p>" + "Gender: " + senatorGender +"</p><p>" + "Rank: " +senatorRank + "</p><p>" + "Office : " + senatorOffice + "</p><p>" + "DOB: " + senatorDOB + "</p><p>" +"Start Date: " +senatorStartDate +"</p><p>" + "YoutubeID: " + senatorYoutube + "</p><p>" + "TwitterID: " + senatorTwitter + "</p><p>" +"Website: <a href='" + senatorWebsite + "'target = '_blank'>" + senatorWebsite +"</a>" +"</p><p> <button type='button' onclick='removePopUp(uniqueLists())'>Close</button></p></div>";
                 document.getElementById("detailedInfo").innerHTML = senDetailedInfo;
                 document.getElementById("detailedInfo").style.display = "block";
                 
@@ -261,16 +266,16 @@
             
             /* This disables the filters when the detailed info on each senator popup is open*/
             function disableFilters(setsInfo) {
-                for(var item of setsInfo[0]) {
-                    document.getElementById("filter"+item).disabled = true;
+                for(var i=0; i < setsInfo[0].length; i++) {
+                    document.getElementById("filter"+setsInfo[0][i]).disabled = true;
                 }
                 
-                for(var item of setsInfo[1]) {
-                    document.getElementById("filter"+item).disabled = true;
+                for(var i=0; i < setsInfo[1].length; i++) {
+                    document.getElementById("filter"+setsInfo[1][i]).disabled = true;
                 }
                 
-                for(var item of setsInfo[2]) {
-                    document.getElementById("filter"+item).disabled = true;
+                for(var i=0; i < setsInfo[2].length; i++) {
+                    document.getElementById("filter"+setsInfo[2][i]).disabled = true;
                 }
                 
                 document.getElementById("dropdown").classList.add("hide");
@@ -283,16 +288,16 @@
                 document.getElementById("resetButton").disabled = false;
                 document.getElementById("dropdown").classList.remove("hide");
                 
-                for(var item of setsInfo[0]) {
-                    document.getElementById("filter"+item).disabled = false;
+                for(var i=0; i < setsInfo[0].length; i++) {
+                    document.getElementById("filter"+setsInfo[0][i]).disabled = false;
                 }
                 
-                for(var item of setsInfo[1]) {
-                    document.getElementById("filter"+item).disabled = false;
+                for(var i=0; i < setsInfo[1].length; i++) {
+                    document.getElementById("filter"+setsInfo[1][i]).disabled = false;
                 }
                 
-                for(var item of setsInfo[2]) {
-                    document.getElementById("filter"+item).disabled = false;
+                for(var i=0; i < setsInfo[2].length; i++) {
+                    document.getElementById("filter"+setsInfo[2][i]).disabled = false;
                 }
             }
             
@@ -433,9 +438,9 @@
                         }
                     } else {
                         item.classList.remove("show");
-                        counter += 1
+                        counter += 1;
                         if (counter == 100) {
-                            var noData = "<p>There are no senators matching that combination of filters</p>"
+                            var noData = "<p>There are no senators matching that combination of filters</p>";
                             document.getElementById("noData").innerHTML = noData;
                         }
                     }
