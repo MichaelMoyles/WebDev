@@ -232,13 +232,13 @@
                 var senatorState = array[item].description.split("for ")[1];
                 var senatorGender = array[item].person.gender_label;
                 var senatorRank = array[item].senator_rank_label;
-                var eachSenatorBox = "<div class='eachSenator show "+ item + " " + senatorParty + " " + senatorRank + " " + senatorState + "'><p>" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button class='detailsButton' type='button' onclick='senDetailsBtnClicked("+item+");'>Details</button></p></div>";
+                var eachSenatorBox = "<div class='eachSenator show "+ item + " " + senatorParty + " " + senatorRank + " " + senatorState + "'><p>" + senatorFirstName + " " + senatorLastName + "</p><p>" + senatorParty + "</p><p>" + senatorState + "</p><p>" + senatorGender +"</p><p>" + senatorRank + "</p><p><button class='detailsButton' type='button' onclick='senDetailsBtnClicked("+item+", event);'>Details</button></p></div>";
                 
                 return eachSenatorBox;
             }
             
             /* Function that executes when the user clicks for more details about a particular senator */
-            function senDetailsBtnClicked(item) {
+            function senDetailsBtnClicked(item, event) {
                 
                 disableFilters(uniqueLists());
                 
@@ -257,7 +257,9 @@
                 var senatorTwitter = senators[item].person.twitterid;
                 var senatorWebsite = senators[item].website;
                 
-                senDetailedInfo += "<div class='popup "+ item + " " + senatorParty + " " + senatorRank + "'><p>" +"Name :" + senatorFirstName + " " + senatorLastName + "</p><p>" +"Party: " +senatorParty + "</p><p>" + "State: " + senatorState + "</p><p>" + "Gender: " + senatorGender +"</p><p>" + "Rank: " +senatorRank + "</p><p>" + "Office : " + senatorOffice + "</p><p>" + "DOB: " + senatorDOB + "</p><p>" +"Start Date: " +senatorStartDate +"</p><p>" + "YoutubeID: " + senatorYoutube + "</p><p>" + "TwitterID: " + senatorTwitter + "</p><p>" +"Website: <a href='" + senatorWebsite + "'target = '_blank'>" + senatorWebsite +"</a>" +"</p><p> <button type='button' onclick='removePopUp(uniqueLists())'>Close</button></p></div>";
+                var yCordDetails = event.pageY
+                
+                senDetailedInfo += "<div class='popup "+ item + " " + senatorParty + " " + senatorRank + "'><p>" +"Name :" + senatorFirstName + " " + senatorLastName + "</p><p>" +"Party: " +senatorParty + "</p><p>" + "State: " + senatorState + "</p><p>" + "Gender: " + senatorGender +"</p><p>" + "Rank: " +senatorRank + "</p><p>" + "Office : " + senatorOffice + "</p><p>" + "DOB: " + senatorDOB + "</p><p>" +"Start Date: " +senatorStartDate +"</p><p>" + "YoutubeID: " + senatorYoutube + "</p><p>" + "TwitterID: " + senatorTwitter + "</p><p>" +"Website: <a href='" + senatorWebsite + "'target = '_blank'>" + senatorWebsite +"</a>" +"</p><p> <button type='button' onclick='removePopUp(uniqueLists()," + yCordDetails + ", event)'>Close</button></p></div>";
                 document.getElementById("detailedInfo").innerHTML = senDetailedInfo;
                 document.getElementById("detailedInfo").style.display = "block";
                 
@@ -289,7 +291,7 @@
             }
             
             /* When the close button of the popup is clicked, this function executes that re-enables the filtering, the details buttons and removes the popup  */
-            function removePopUp(setsInfo) {
+            function removePopUp(setsInfo, yCordDetails, event) {
                 document.getElementById("detailedInfo").style.display = "none";
                 document.getElementById("resetButton").disabled = false;
                 document.getElementById("dropdown").classList.remove("hide");
@@ -311,6 +313,22 @@
                 for(var i=0; i < setsInfo[2].length; i++) {
                     document.getElementById("filter"+setsInfo[2][i]).disabled = false;
                 }
+                
+                
+                var yCordClose = event.pageY;
+                if (yCordClose < yCordDetails) {
+                    window.scroll({
+                    top: yCordDetails,
+                    behavior: 'smooth'
+                });
+                } else {
+                    var value = yCordDetails - 200;
+                    window.scroll({
+                    top: value,
+                    behavior: 'smooth'
+                });
+                }
+                
             }
             
             // Scrolls to the top of the popup box
