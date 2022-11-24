@@ -221,6 +221,33 @@
                 document.getElementById("rankFilter").innerHTML = rankFilter;
                 document.getElementById("drop_content").innerHTML = stateFilter;
                 document.getElementById("senatorsSection").innerHTML = senatorsSection;
+                
+                // Invokes a sort list funciton to sort the states alphabetically
+                sortStates();
+            }
+            
+            /* The below function sorts the states alphabetically in the dropdown */
+            /* Ref: https://www.w3schools.com/howto/howto_js_sort_list.asp */
+            function sortStates() {
+                var list, i, switching, b, shouldSwitch;
+                list = document.getElementById("drop_content");
+                switching = true;
+                while (switching) {
+                    switching = false;
+                    b = list.getElementsByTagName("li");
+                    for (i = 0; i < (b.length-1); i++) {
+                        shouldSwitch = false;
+                        if (b[i].innerHTML.toLowerCase() > b[i + 1].innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                    
+                    if (shouldSwitch) {
+                        b[i].parentNode.insertBefore(b[i + 1], b[i]);
+                        switching = true;
+                    }
+                }
             }
             
             /* Function that creates each senator div and returns a string back */
