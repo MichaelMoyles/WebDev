@@ -16,12 +16,16 @@
         <div class="total_section">
             <div id="total_table"></div>
         </div>
-        
+        <div class="debug_">
+        <span id="debug">Reading JSON files</span>
+    </div>
         
         <div class="leaders">
             <h3>Senate Leadership</h3>
             <div id="partyList"></div>
+            
         </div>
+        
         
         <!-- Filters section of the webpage -->
         <div class="container">
@@ -62,6 +66,14 @@
         </div>
         
         <script>
+        function enableInput(){
+
+        if(detailedParseComplete){
+            
+            document.getElementById('debug').innerHTML = "JSON data has been read successfully";
+        }
+
+    }
             // Initalising a global variable to hold the JSON data
             var parsedObj;
             var xmlhttp = new XMLHttpRequest();
@@ -71,7 +83,9 @@
             xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                     parsedObj = JSON.parse(xmlhttp.responseText);
+                    detailedParseComplete = true;
                     run();
+                    enableInput();
                 }
             };
             
