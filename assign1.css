@@ -96,7 +96,7 @@ button {
     border-radius: 6px;
     position: absolute;
     text-align: center;
-    font-size: 70px;
+    font-size: 60px;
     transform: translate(-50%,-50%,);
     top: 180%;
     left: 16%;
@@ -175,14 +175,6 @@ a:active {
     display: none;
 }
 
-.party{
-    
-    
-}
-.rank{
-
-}
-
 .container{
     width: 300px; 
     margin: 10px;
@@ -199,4 +191,17 @@ a:active {
     text-align:center;
     padding:4px;  
 }
+#debug {
+    color: limegreen;
+    font-weight: bold;
+    font-size: 20px;
+    justify-content: center;
+    text-align: center;
+
+}
+.debug_{
+    justify-content: center;
+    text-align: center;
+}
+
 
